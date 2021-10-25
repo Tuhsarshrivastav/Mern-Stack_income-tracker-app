@@ -5,6 +5,7 @@ const cors = require("cors")
 // imports
 const dbConnect = require("./config/db.config");
 const userRouter = require("./routes/userRoute");
+const {errorHandler}= require("./middlewares/errorMiddlewares")
 // db configuration
 dbConnect();
 
@@ -14,5 +15,8 @@ app.use(cors())
 
 //routes
 app.use("/api/users", userRouter);
+
+//error handlers
+app.use(errorHandler)
 
 module.exports = app;
