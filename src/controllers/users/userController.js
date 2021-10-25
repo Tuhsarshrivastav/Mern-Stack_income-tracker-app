@@ -1,5 +1,7 @@
 const expressAsyncHandler = require("express-async-handler");
 const User = require("../../model/User");
+
+//register users api
 module.exports.register = expressAsyncHandler(async (req, res) => {
   const { email, firstname, lastname, password } = req.body;
   // check if user exists
@@ -9,6 +11,7 @@ module.exports.register = expressAsyncHandler(async (req, res) => {
     if (userExists) {
       res.status(409).json({ success: false, message: "User already exists" });
     }
+    //create new user
     const user = await User.create({ email, firstname, lastname, password });
     res.status(200).json(user);
   } catch (error) {}
