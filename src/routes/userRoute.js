@@ -2,7 +2,7 @@ const express = require('express');
 const { register } = require('../controllers/users/userController');
 const router = express();
 
-router.get('/register',register)
+router.post('/register',register)
 
 
 

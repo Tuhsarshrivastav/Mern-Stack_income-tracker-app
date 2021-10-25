@@ -1,12 +1,16 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-
+const cors = require("cors")
 // imports
 const dbConnect = require("./config/db.config");
 const userRouter = require("./routes/userRoute");
 // db configuration
 dbConnect();
+
+//middleware
+app.use(express.json())
+app.use(cors())
 
 //routes
 app.use("/api/users", userRouter);
