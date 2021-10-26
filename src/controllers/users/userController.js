@@ -15,4 +15,15 @@ module.exports.register = expressAsyncHandler(async (req, res) => {
     const user = await User.create({ email, firstname, lastname, password });
     res.status(200).json(user);
   } catch (error) {}
-} );
+});
+
+// fetch all users
+
+module.exports.fetchAllUser = expressAsyncHandler(async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (error) {
+    res.json(error);
+  }
+});
