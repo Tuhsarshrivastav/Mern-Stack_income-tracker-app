@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 //schema for user
 const expensesSchema = mongoose.Schema(
@@ -30,5 +30,7 @@ const expensesSchema = mongoose.Schema(
     timestamp: true,
   }
 );
+
+expensesSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("expenses", expensesSchema);

@@ -19,10 +19,11 @@ const createExpenses = expressAsyncHandler(async (req, res) => {
   }
 });
 
-// fetch all incomes
+// fetch all expenses
 const fetchExpenses = expressAsyncHandler(async (req, res) => {
+  const {page}= req.query
   try {
-    const expenses = await Income.find({});
+    const expenses = await Income.paginate({},{limit:10,page:Number(page)});
     res.json(expenses);
   } catch (error) {
     throw new Error(error + "Problem while fetch expenses , please try again ");
