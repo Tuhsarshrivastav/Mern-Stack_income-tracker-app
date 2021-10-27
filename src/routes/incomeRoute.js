@@ -1,10 +1,6 @@
 const express = require("express");
 const {
-  createIncome,
-  fetchincome,
-  fetchSingleIncome,
-  updateIncome,
-  deleteIncome
+  createIncome,deleteIncome,fetchSingleIncome,fetchincome,updateIncome
 } = require("../controllers/income/incomeController");
 const router = express();
 

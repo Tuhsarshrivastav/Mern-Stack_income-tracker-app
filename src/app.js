@@ -8,6 +8,7 @@ const cors = require("cors");
 const dbConnect = require("./config/db.config");
 const userRouter = require("./routes/userRoute");
 const incomeRoute = require("./routes/incomeRoute");
+const expensesRouter = require("./routes/expenseRouter");
 const { errorHandler, notfound } = require("./middlewares/errorMiddlewares");
 
 // db configuration
@@ -22,6 +23,9 @@ app.use("/api/users", userRouter);
 
 // income routes
 app.use("/api/income", incomeRoute);
+
+//  expenses routes
+app.use("/api/expense", expensesRouter);
 
 //error handlers
 app.use(notfound);
