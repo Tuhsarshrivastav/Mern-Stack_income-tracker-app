@@ -28,6 +28,12 @@ const expensesSchema = mongoose.Schema(
   },
   {
     timestamp: true,
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
   }
 );
 

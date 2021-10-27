@@ -21,9 +21,12 @@ const createExpenses = expressAsyncHandler(async (req, res) => {
 
 // fetch all expenses
 const fetchExpenses = expressAsyncHandler(async (req, res) => {
-  const {page}= req.query
+  const { page } = req.query;
   try {
-    const expenses = await Income.paginate({},{limit:10,page:Number(page)});
+    const expenses = await Income.paginate(
+      {},
+      { limit: 10, page: Number(page), populate: "user" }
+    );
     res.json(expenses);
   } catch (error) {
     throw new Error(error + "Problem while fetch expenses , please try again ");
@@ -81,4 +84,10 @@ const deleteExpenses = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { updateExpenses, createExpenses, fetchExpenses, fetchSingleExpenses ,deleteExpenses};
+module.exports = {
+  updateExpenses,
+  createExpenses,
+  fetchExpenses,
+  fetchSingleExpenses,
+  deleteExpenses,
+};

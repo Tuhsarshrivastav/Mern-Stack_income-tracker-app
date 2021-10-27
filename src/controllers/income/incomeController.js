@@ -23,7 +23,10 @@ const createIncome = expressAsyncHandler(async (req, res) => {
 const fetchincome = expressAsyncHandler(async (req, res) => {
   const { page } = req.query;
   try {
-    const income = await Income.paginate({}, { limit: 10, page: Number(page) });
+    const income = await Income.paginate(
+      {},
+      { limit: 10, page: Number(page), populate: "user" }
+    );
     res.json(income);
   } catch (error) {
     throw new Error(error + "Problem while fetch income , please try again ");
