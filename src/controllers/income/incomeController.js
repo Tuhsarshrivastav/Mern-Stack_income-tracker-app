@@ -21,8 +21,9 @@ const createIncome = expressAsyncHandler(async (req, res) => {
 
 // fetch all incomes
 const fetchincome = expressAsyncHandler(async (req, res) => {
+  const { page } = req.query;
   try {
-    const income = await Income.find({});
+    const income = await Income.paginate({}, { limit: 10, page: Number(page) });
     res.json(income);
   } catch (error) {
     throw new Error(error + "Problem while fetch income , please try again ");
@@ -80,4 +81,10 @@ const deleteIncome = expressAsyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { updateIncome, createIncome, fetchincome, fetchSingleIncome ,deleteIncome};
+module.exports = {
+  updateIncome,
+  createIncome,
+  fetchincome,
+  fetchSingleIncome,
+  deleteIncome,
+};
