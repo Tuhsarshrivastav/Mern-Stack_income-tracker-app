@@ -1,4 +1,5 @@
 const expressAsyncHandler = require("express-async-handler");
+const generateToken = require("../../middlewares/generateToken");
 const User = require("../../model/User");
 
 //register users api
@@ -27,7 +28,6 @@ const fetchAllUser = expressAsyncHandler(async (req, res) => {
   }
 });
 
-
 //login user
 const login = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -43,7 +43,7 @@ const login = expressAsyncHandler(async (req, res) => {
       lastname: userFound.lastname,
       email: userFound.email,
       isAdmin: userFound.isAdmin,
-      // token: generateToken(userFound._id),
+      token: generateToken(userFound._id),
     });
   } else {
     res.status(401);
