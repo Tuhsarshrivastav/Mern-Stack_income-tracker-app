@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Login action
@@ -13,7 +13,7 @@ export const loginUserAction = createAsyncThunk(
     try {
       // make http call here
       const { data } = await axios.post(
-        "localhost:5000/api/users/register",
+        "localhost:5000/api/users/login",
         payload,
         config
       );
@@ -26,3 +26,38 @@ export const loginUserAction = createAsyncThunk(
     }
   }
 );
+
+//slices
+const usersSlices = createSlice({
+  name: "users",
+  initialState: {
+    auth: false,
+    users: ["tushar", "dhruv"],
+  },
+  extraReducers: (builder) => {
+    // handle pending state
+    builder.addCase(loginUserAction.pending, (state, action) => {
+      state.userLoading = true;
+      state.userAppErr = undefined;
+      state.userServerErr = undefined;
+    });
+
+    // handle success state
+    builder.addCase(loginUserAction.fulfilled, (state, action) => {
+      state.userAuth = action?.payload;
+      state.userLoading = false;
+      state.userAppErr = undefined;
+      state.userServerErr = undefined;
+    });
+
+    // handle rejected state
+
+    builder.addCase(loginUserAction.rejected, (state, action) => {
+      state.userLoading = false;
+      state.userAppErr = action?.payload?.message;
+      state.userServerErr = action?.error?.message;
+    });
+  },
+});
+
+export default usersSlices.reducer;
