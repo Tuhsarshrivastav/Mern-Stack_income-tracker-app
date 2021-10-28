@@ -1,6 +1,8 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { loginUserAction } from "../../redux/slices/users/usersSlices";
 
 //form validations
 const formSchema = Yup.object({
@@ -9,6 +11,9 @@ const formSchema = Yup.object({
 });
 
 const Login = () => {
+  //dispatch
+
+  const dispatch = useDispatch();
   //formik form
 
   const formik = useFormik({
@@ -17,7 +22,8 @@ const Login = () => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      console.log(values)
+      dispatch(loginUserAction(values));
     },
     validationSchema: formSchema,
   });

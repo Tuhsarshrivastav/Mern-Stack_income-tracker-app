@@ -13,13 +13,13 @@ export const loginUserAction = createAsyncThunk(
     try {
       // make http call here
       const { data } = await axios.post(
-        "localhost:5000/api/users/login",
+        "http://localhost:5000/api/users/login",
         payload,
         config
       );
       return data;
     } catch (error) {
-      if (!error && !error.response) {
+      if (!error?.response) {
         throw error;
       }
       return rejectWithValue(error?.response?.data);
@@ -53,9 +53,10 @@ const usersSlices = createSlice({
     // handle rejected state
 
     builder.addCase(loginUserAction.rejected, (state, action) => {
+      console.log(action);
       state.userLoading = false;
-      state.userAppErr = action?.payload?.message;
-      state.userServerErr = action?.error?.message;
+      state.userAppErr = action?.payload?.msg;
+      state.userServerErr = action?.error?.msg;
     });
   },
 });
