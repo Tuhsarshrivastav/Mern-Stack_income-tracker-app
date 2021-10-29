@@ -1,33 +1,48 @@
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import * as Yup from "yup";
 import { registerUserAction } from "../../redux/slices/users/usersSlices";
+import DisabledButton from "../../components/DisabledButton";
 
 //form validations
 const formSchema = Yup.object({
-  firstname: Yup.string().required("Firstname is required"),
-  lastname: Yup.string().required("Lastname is required"),
   email: Yup.string().required("Email is required"),
   password: Yup.string().required("Password is required"),
+  firstname: Yup.string().required("First Name is required"),
+  lastname: Yup.string().required("Last Name is required"),
 });
 
 const Register = () => {
+  //history
+  const history = useHistory();
+  //get data from store
+  const user = useSelector(state => state?.users);
+  const { userAppErr, userServerErr, userLoading, isRegistered } = user;
+
   //dispatch
   const dispatch = useDispatch();
-
   //formik form
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
       email: "",
       password: "",
+      firstname: "",
+      lastname: "",
     },
-    onSubmit: (values) => {
+    onSubmit: values => {
       dispatch(registerUserAction(values));
     },
     validationSchema: formSchema,
   });
+
+  // Redirect
+  useEffect(() => {
+    if (isRegistered) {
+      history.push("/login");
+    }
+  }, [isRegistered]);
 
   return (
     <section className="position-relative py-5 overflow-hidden vh-100">
@@ -48,10 +63,12 @@ const Register = () => {
                 <span className="text-muted">New User</span>
                 <h3 className="fw-bold mb-5">Register</h3>
 
-                {/* <div class="alert alert-danger" role="alert">
-
-                </div> */}
-
+                {/* Display err here */}
+                {userAppErr || userServerErr ? (
+                  <div class="alert alert-danger" role="alert">
+                    {userServerErr} {userAppErr}
+                  </div>
+                ) : null}
                 <input
                   value={formik.values.firstname}
                   onChange={formik.handleChange("firstname")}
@@ -100,13 +117,16 @@ const Register = () => {
                 <div className="text-danger mb-2">
                   {formik.touched.password && formik.errors.password}
                 </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary py-2 w-100 mb-4"
-                >
-                  Register
-                </button>
+                {userLoading ? (
+                  <DisabledButton />
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-primary py-2 w-100 mb-4"
+                  >
+                    Register
+                  </button>
+                )}
               </form>
             </div>
           </div>

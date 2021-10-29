@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
 import { loginUserAction } from "../../redux/slices/users/usersSlices";
+import DisabledButton from "../../components/DisabledButton";
 
 //form validations
 const formSchema = Yup.object({
@@ -11,8 +13,15 @@ const formSchema = Yup.object({
 });
 
 const Login = () => {
+  //history
+  const history = useHistory();
+
   //dispatch
   const dispatch = useDispatch();
+  //get data from store
+
+  const user = useSelector((state) => state?.users);
+  const { userAppErr, userServerErr, userLoading, userAuth } = user;
 
   //formik form
   const formik = useFormik({
@@ -21,13 +30,18 @@ const Login = () => {
       password: "",
     },
     onSubmit: (values) => {
-      console.log(values)
       dispatch(loginUserAction(values));
     },
     validationSchema: formSchema,
   });
 
   // Redirect
+  useEffect(() => {
+    if (userAuth) {
+      history.push("/profile");
+    }
+  }, [userAuth]);
+
   return (
     <section
       style={{ height: "100vh" }}
@@ -51,6 +65,11 @@ const Login = () => {
               <h3 className="fw-bold mb-5">Login to your account</h3>
               {/* Display Err */}
 
+              {userAppErr || userServerErr ? (
+                <div class="alert alert-danger" role="alert">
+                  {userServerErr} {userAppErr}
+                </div>
+              ) : null}
               <form onSubmit={formik.handleSubmit}>
                 <input
                   value={formik.values.email}
@@ -78,12 +97,16 @@ const Login = () => {
                 </div>
 
                 <div>
-                  <button
-                    type="submit"
-                    className="btn btn-primary py-2 w-100 mb-4"
-                  >
-                    Login
-                  </button>
+                  {userLoading ? (
+                    <DisabledButton />
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-primary py-2 w-100 mb-4"
+                    >
+                      Login
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
