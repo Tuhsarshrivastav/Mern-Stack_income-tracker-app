@@ -1,4 +1,34 @@
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { registerUserAction } from "../../redux/slices/users/usersSlices";
+
+//form validations
+const formSchema = Yup.object({
+  firstname: Yup.string().required("Firstname is required"),
+  lastname: Yup.string().required("Lastname is required"),
+  email: Yup.string().required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
+
 const Register = () => {
+  //dispatch
+  const dispatch = useDispatch();
+
+  //formik form
+  const formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      dispatch(registerUserAction(values));
+    },
+    validationSchema: formSchema,
+  });
+
   return (
     <section className="position-relative py-5 overflow-hidden vh-100">
       <div className="d-none d-md-block position-absolute top-0 start-0 bg-dark w-75 h-100"></div>
@@ -14,57 +44,61 @@ const Register = () => {
           </div>
           <div className="col-12 col-lg-5 ms-auto">
             <div className="p-5 bg-light rounded text-center">
-              <form>
+              <form onSubmit={formik.handleSubmit}>
                 <span className="text-muted">New User</span>
                 <h3 className="fw-bold mb-5">Register</h3>
 
-                <div class="alert alert-danger" role="alert"></div>
+                {/* <div class="alert alert-danger" role="alert">
+
+                </div> */}
 
                 <input
-                //   value={formik.values.firstname}
-                  //   onChange={formik.handleChange("firstname")}
-                  //   onBlur={formik.handleBlur("firstname")}
+                  value={formik.values.firstname}
+                  onChange={formik.handleChange("firstname")}
+                  onBlur={formik.handleBlur("firstname")}
                   className="form-control mb-2"
                   type="text"
                   placeholder="First Name"
                 />
                 {/* Err */}
-                {/* <div className="text-danger mb-2">
+                <div className="text-danger mb-2">
                   {formik.touched.firstname && formik.errors.firstname}
-                </div> */}
+                </div>
                 <input
-                  //   value={formik.values.lastname}
-                  //   onChange={formik.handleChange("lastname")}
-                  //   onBlur={formik.handleBlur("lastname")}
+                  value={formik.values.lastname}
+                  onChange={formik.handleChange("lastname")}
+                  onBlur={formik.handleBlur("lastname")}
                   className="form-control mb-2"
                   type="text"
                   placeholder="Last Name"
                 />
                 {/* Err */}
-                {/* <div className="text-danger mb-2">
+                <div className="text-danger mb-2">
                   {formik.touched.lastname && formik.errors.lastname}
-                </div> */}
+                </div>
                 <input
-                  //   value={formik.values.email}
-                  //   onChange={formik.handleChange("email")}
-                  //   onBlur={formik.handleBlur("email")}
+                  value={formik.values.email}
+                  onChange={formik.handleChange("email")}
+                  onBlur={formik.handleBlur("email")}
                   className="form-control mb-2"
                   type="email"
                   placeholder="Email"
                 />
                 {/* Err */}
-                <div className="text-danger mb-2"></div>
+                <div className="text-danger mb-2">
+                  {formik.touched.email && formik.errors.email}
+                </div>
                 <input
-                //   value={formik.values.password}
-                  //   onChange={formik.handleChange("password")}
-                  //   onBlur={formik.handleBlur("password")}
+                  value={formik.values.password}
+                  onChange={formik.handleChange("password")}
+                  onBlur={formik.handleBlur("password")}
                   className="form-control mb-2"
                   type="password"
                   placeholder="Password"
                 />
                 {/* Err */}
                 <div className="text-danger mb-2">
-                  {/* {formik.touched.password && formik.errors.password} */}
+                  {formik.touched.password && formik.errors.password}
                 </div>
 
                 <button
