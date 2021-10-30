@@ -7,12 +7,17 @@ import AddIncome from "./screens/income/AddIncome";
 import AddExpense from "./screens/expense/AddExpense";
 import Profile from "./screens/users/Profile";
 import PrivateProtectRoute from "./components/Navigation/PrivateProtectRoute";
+import NotAdmin from "./components/NotAdmin";
+import DashboardData from "./screens/users/DashboardData";
+import AdminRoute from "./components/Navigation/Private/AdminRoute";
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/not-admin" component={NotAdmin} />
+        <AdminRoute exact path="/dashboard" component={DashboardData} />
         <PrivateProtectRoute exact path="/add-income" component={AddIncome} />
         <PrivateProtectRoute exact path="/add-expense" component={AddExpense} />
         <PrivateProtectRoute exact path="/profile" component={Profile} />
