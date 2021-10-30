@@ -12,7 +12,14 @@ export const loginUserAction = createAsyncThunk(
     };
     try {
       // make http call here
-      const { data } = await axios.post(`${baseURL}/users/login`, payload, config);
+      const { data } = await axios.post(
+        `${baseURL}/users/login`,
+        payload,
+        config
+      );
+
+      // save user into localstorage
+      localStorage.setItem("userInfo", JSON.stringify(data));
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -50,56 +57,52 @@ export const registerUserAction = createAsyncThunk(
 );
 
 //slices
+
+// Get user from localstorage and place it inside our store
+const userLoginFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : undefined;
 const usersSlices = createSlice({
   name: "users",
-  initialState: {},
+  initialState: {
+    userAuth: userLoginFromStorage,
+  },
   extraReducers: (builder) => {
-    // login reducers
-
-    // handle pending state
+    //   Login action
     builder.addCase(loginUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-
-    // handle success state
+    //handle success state
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state.userAuth = action?.payload;
       state.userLoading = false;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-
-    // handle rejected state
+    //handle rejected state
     builder.addCase(loginUserAction.rejected, (state, action) => {
       console.log(action);
       state.userLoading = false;
       state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.msg;
     });
-  },
-
-  // register reducer
-  extraReducers: (builder) => {
-    // handle pending state
+    //   Register
     builder.addCase(registerUserAction.pending, (state, action) => {
       state.userLoading = true;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-
-    // handle success state
+    //handle success state
     builder.addCase(registerUserAction.fulfilled, (state, action) => {
-      state.userAuth = action?.payload;
+      state.isRegistered = true;
       state.userLoading = false;
       state.userAppErr = undefined;
       state.userServerErr = undefined;
     });
-
-    // handle rejected state
+    //handle rejected state
     builder.addCase(registerUserAction.rejected, (state, action) => {
-      console.log(action);
       state.userLoading = false;
       state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.msg;
