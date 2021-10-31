@@ -4,10 +4,9 @@ import PrivateNavbar from "./Private/PrivateNavbar";
 import PublicNavbar from "./Public/PublicNavbar";
 
 const Navbar = () => {
-  const users = useSelector(state => state?.users);
-
-  const { userAuth } = users;
-  return <>{userAuth ? <PrivateNavbar /> : <PublicNavbar />}</>;
+  const userLogin = useSelector(state => state?.users?.userAuth);
+  console.log(userLogin);
+  return <>{userLogin ? <PrivateNavbar /> : <PublicNavbar />}</>;
 };
 
 export default Navbar;

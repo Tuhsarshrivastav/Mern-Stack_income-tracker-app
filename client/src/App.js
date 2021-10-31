@@ -10,10 +10,12 @@ import PrivateProtectRoute from "./components/Navigation/PrivateProtectRoute";
 import NotAdmin from "./components/NotAdmin";
 import DashboardData from "./screens/users/DashboardData";
 import AdminRoute from "./components/Navigation/Private/AdminRoute";
+import Navbar from "./components/Navigation/Navbar";
 
 function App() {
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/not-admin" component={NotAdmin} />
