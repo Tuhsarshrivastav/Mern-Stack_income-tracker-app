@@ -11,6 +11,7 @@ import NotAdmin from "./components/NotAdmin";
 import DashboardData from "./screens/users/DashboardData";
 import AdminRoute from "./components/Navigation/Private/AdminRoute";
 import Navbar from "./components/Navigation/Navbar";
+import ExpensesList from "./screens/expense/ExpensesList";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path="/" component={Home} />
+        <PrivateProtectRoute exact path="/expenses" component={ExpensesList} />
         <Route exact path="/not-admin" component={NotAdmin} />
         <AdminRoute exact path="/dashboard" component={DashboardData} />
         <PrivateProtectRoute exact path="/add-income" component={AddIncome} />

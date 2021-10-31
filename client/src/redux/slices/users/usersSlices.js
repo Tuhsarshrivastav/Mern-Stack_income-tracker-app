@@ -56,6 +56,22 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+//Logout action
+export const logout = createAsyncThunk(
+  "user/logout",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      //Save user into localstorage
+      localStorage.removeItem("userInfo");
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //slices
 
 // Get user from localstorage and place it inside our store
@@ -106,6 +122,11 @@ const usersSlices = createSlice({
       state.userLoading = false;
       state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.msg;
+    });
+    // Logout
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.userAuth = undefined;
+      state.userLoading = false;
     });
   },
 });
