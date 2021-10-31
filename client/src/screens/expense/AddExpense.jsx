@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import moneySVG from "../../img/money.svg";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
-
 import * as Yup from "yup";
+import { useDispatch,useSelector } from "react-redux";
+import { createExpAction } from "../../redux/slices/expenses/expenseSlices";
 
 //form validations
 const formSchema = Yup.object({
@@ -13,6 +14,9 @@ const formSchema = Yup.object({
 });
 
 const AddExpense = () => {
+  //dispatch
+  const dispatch = useDispatch();
+
   //formik form
   const formik = useFormik({
     initialValues: {
@@ -21,7 +25,7 @@ const AddExpense = () => {
       amount: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(createExpAction(values));
     },
     validationSchema: formSchema,
   });

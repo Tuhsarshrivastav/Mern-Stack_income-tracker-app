@@ -9,9 +9,7 @@ const {
 const authMiddewares = require("../middlewares/authMiddlwares");
 const router = express();
 
-
-
-authMiddewares, router.post("/", authMiddewares, createExpenses);
+router.post("/", authMiddewares, createExpenses);
 router.get("/", authMiddewares, fetchExpenses);
 router.get("/:id", authMiddewares, fetchSingleExpenses);
 router.put("/:id", authMiddewares, updateExpenses);
