@@ -1,10 +1,11 @@
 import React from "react";
-import moneySVG from "../../img/money.svg";
+import moneySVG from "../img/money.svg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { updateExpAction } from "../../redux/slices/expenses/expenseSlices";
-import DisabledButton from "../../components/DisabledButton";
+import DisabledButton from "./DisabledButton";
+import { updateExpAction } from "../redux/slices/expenses/expenseSlices";
+import { updateIncomeAction } from "../redux/slices/income/incomeSlices";
 
 //form validations
 const formSchema = Yup.object({
@@ -14,7 +15,7 @@ const formSchema = Yup.object({
 });
 const EditContent = ({
   location: {
-    state: { expense },
+    state: { item },
   },
 }) => {
   //dispatch
@@ -23,16 +24,18 @@ const EditContent = ({
   //formik form
   const formik = useFormik({
     initialValues: {
-      title: expense?.title,
-      description: expense?.description,
-      amount: expense?.amount,
+      title: item?.title,
+      description: item?.description,
+      amount: item?.amount,
     },
     onSubmit: (values) => {
       const data = {
         ...values,
-        id: expense?._id,
+        id: item?._id,
       };
-      dispatch(updateExpAction(data));
+      item?.type === "income"
+        ? dispatch(updateIncomeAction(data))
+        : dispatch(updateExpAction(data));
     },
     validationSchema: formSchema,
   });
@@ -55,12 +58,12 @@ const EditContent = ({
             <div className="p-4 shadow-sm rounded bg-white">
               <form onSubmit={formik.handleSubmit}>
                 <span className="text-muted">
-                  {/* {data?.type === "income" ? " Income" : " Expense"} */}
+                  {item?.type === "income" ? " Income" : " Expense"}
                 </span>
                 <h2 className="mb-4 fw-light">
-                  {/* {data?.type === "income"
+                  {item?.type === "income"
                     ? " Update Income"
-                    : " Update Expense"} */}
+                    : " Update Expense"}
                 </h2>
                 {/* Display Err */}
                 {appErr || serverErr ? <h1>error</h1> : null}

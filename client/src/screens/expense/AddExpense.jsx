@@ -93,7 +93,7 @@ const AddExpense = () => {
                     {formik.touched.amount && formik.errors.amount}
                   </div>
                   <button type="submit" className="btn btn-danger mb-4 w-100">
-                    Record Expense
+                    Record New Expense
                   </button>
                 </form>
               </div>

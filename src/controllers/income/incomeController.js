@@ -3,13 +3,13 @@ const Income = require("../../model/income");
 
 // create income
 const createIncome = expressAsyncHandler(async (req, res) => {
-  const { title, description, amount, user } = req.body;
+  const { title, description, amount } = req.body;
   try {
     const income = await Income.create({
       title,
       amount,
       description,
-      user,
+      user: req.user._id,
     });
     res.json(income);
   } catch (error) {

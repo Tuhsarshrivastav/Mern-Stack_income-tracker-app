@@ -12,8 +12,8 @@ import DashboardData from "./screens/users/DashboardData";
 import AdminRoute from "./components/Navigation/Private/AdminRoute";
 import Navbar from "./components/Navigation/Navbar";
 import ExpensesList from "./screens/expense/ExpensesList";
-import EditExpenses from "./screens/expense/EditExpenses";
-
+import EditContent from "./components/EditContent";
+import IncomeList from "./screens/income/IncomeList";
 function App() {
   return (
     <Router>
@@ -21,11 +21,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <PrivateProtectRoute exact path="/expenses" component={ExpensesList} />
-        <PrivateProtectRoute
-          exact
-          path="/edit-expense"
-          component={EditExpenses}
-        />
+        <PrivateProtectRoute exact path="/incomes" component={IncomeList} />
+        <PrivateProtectRoute exact path="/edit" component={EditContent} />
         <Route exact path="/not-found" component={NotAdmin} />
         <AdminRoute exact path="/dashboard" component={DashboardData} />
         <PrivateProtectRoute exact path="/add-income" component={AddIncome} />

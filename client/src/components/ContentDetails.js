@@ -11,7 +11,6 @@ const ContentDetails = ({ item }) => {
         <th className="p-6" scope="row">
           {item?.user?.firstname} {item?.user?.lastname}
         </th>
-
         <td className="p-6">{item?.title}</td>
         <td className="p-6">{item?.description}</td>
         <td className="p-6">{currencyFormatter("USD", item?.amount)}</td>
@@ -23,9 +22,9 @@ const ContentDetails = ({ item }) => {
             // onClick={() => navigate(history, "edit", item)}
             onClick={() =>
               history.push({
-                pathname: `/edit-expense/`,
+                pathname: `/edit/`,
                 state: {
-                  expense: item,
+                  item,
                 },
               })
             }
