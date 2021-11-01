@@ -28,6 +28,36 @@ export const createExpAction = createAsyncThunk(
     }
   }
 );
+//update action
+export const updateExpAction = createAsyncThunk(
+  "expense/update",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    //get user token from store
+    const userToken = getState()?.users?.userAuth?.token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+    try {
+      //make http call here
+      const { data } = await axios.put(
+        `${baseURL}/expense/${payload.id}`,
+        payload,
+        config
+      );
+      //dispatch
+      //   dispatch(resetExpCreated());
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 
 //featchall action
 export const fatchAllExpAction = createAsyncThunk(
@@ -101,6 +131,24 @@ const expenseSlice = createSlice({
       state.isExpCreated = false;
     });
     builder.addCase(fatchAllExpAction.rejected, (state, action) => {
+      state.loading = false;
+      state.appErr = action?.payload?.msg;
+      state.serverErr = action?.error?.msg;
+    });
+
+    //   update Expense
+    builder.addCase(updateExpAction.pending, (state, action) => {
+      state.loading = true;
+    });
+
+    builder.addCase(updateExpAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.expenseUpdated = action?.payload;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+      state.isExpCreated = false;
+    });
+    builder.addCase(updateExpAction.rejected, (state, action) => {
       state.loading = false;
       state.appErr = action?.payload?.msg;
       state.serverErr = action?.error?.msg;

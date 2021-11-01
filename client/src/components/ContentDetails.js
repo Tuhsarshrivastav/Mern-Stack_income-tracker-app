@@ -4,7 +4,6 @@ import currencyFormatter from "../utils/cuurencyFormatter";
 import dateFormatter from "../utils/dateFormatter";
 
 const ContentDetails = ({ item }) => {
-  console.log(item);
   const history = useHistory();
   return (
     <>
@@ -24,9 +23,9 @@ const ContentDetails = ({ item }) => {
             // onClick={() => navigate(history, "edit", item)}
             onClick={() =>
               history.push({
-                pathname: `/edit`,
+                pathname: `/edit-expense/`,
                 state: {
-                  item,
+                  expense: item,
                 },
               })
             }

@@ -12,6 +12,7 @@ import DashboardData from "./screens/users/DashboardData";
 import AdminRoute from "./components/Navigation/Private/AdminRoute";
 import Navbar from "./components/Navigation/Navbar";
 import ExpensesList from "./screens/expense/ExpensesList";
+import EditExpenses from "./screens/expense/EditExpenses";
 
 function App() {
   return (
@@ -20,7 +21,12 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <PrivateProtectRoute exact path="/expenses" component={ExpensesList} />
-        <Route exact path="/not-admin" component={NotAdmin} />
+        <PrivateProtectRoute
+          exact
+          path="/edit-expense"
+          component={EditExpenses}
+        />
+        <Route exact path="/not-found" component={NotAdmin} />
         <AdminRoute exact path="/dashboard" component={DashboardData} />
         <PrivateProtectRoute exact path="/add-income" component={AddIncome} />
         <PrivateProtectRoute exact path="/add-expense" component={AddExpense} />
