@@ -1,17 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import AppPagination from "../../components/AppPagination";
 import ContentDetails from "../../components/ContentDetails";
 import { fatchAllExpAction } from "../../redux/slices/expenses/expenseSlices";
 
 const ExpensesList = () => {
+  const [page, setPage] = useState(1);
   //dispatch hook
   const dispatch = useDispatch();
 
   useEffect(() => {
     //request
-    dispatch(fatchAllExpAction(1));
-  }, [dispatch]);
+    dispatch(fatchAllExpAction(+page));
+  }, [dispatch, page]);
 
   // get all expenses
   const allExpenses = useSelector((state) => state.expenses);
@@ -93,7 +95,10 @@ const ExpensesList = () => {
             marginTop: "20px",
           }}
         >
-          {/* Call App Pagination here */}
+          <AppPagination
+            pageNumber={expenseList?.totalPages}
+            setPage={setPage}
+          />
         </div>
       </section>
     </>
