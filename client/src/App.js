@@ -24,7 +24,11 @@ function App() {
         <PrivateProtectRoute exact path="/incomes" component={IncomeList} />
         <PrivateProtectRoute exact path="/edit" component={EditContent} />
         <Route exact path="/not-found" component={NotAdmin} />
-        <AdminRoute exact path="/dashboard" component={DashboardData} />
+        <PrivateProtectRoute
+          exact
+          path="/dashboard"
+          component={DashboardData}
+        />
         <PrivateProtectRoute exact path="/add-income" component={AddIncome} />
         <PrivateProtectRoute exact path="/add-expense" component={AddExpense} />
         <PrivateProtectRoute exact path="/profile" component={Profile} />
