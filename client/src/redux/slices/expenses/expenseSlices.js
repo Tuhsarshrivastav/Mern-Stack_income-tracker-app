@@ -1,6 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
+
+//Actions for  redirect
+export const resetExpCreated = createAction("expense/created/resat");
+export const resetExpUpdate = createAction("expense/update/resat");
+
 
 //Create action
 export const createExpAction = createAsyncThunk(
@@ -17,8 +22,10 @@ export const createExpAction = createAsyncThunk(
     try {
       //make http call here
       const { data } = await axios.post(`${baseURL}/expense`, payload, config);
-      //dispatch
-      //   dispatch(resetExpCreated());
+
+      // dispatch
+      dispatch(resetExpCreated());
+
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -47,8 +54,8 @@ export const updateExpAction = createAsyncThunk(
         payload,
         config
       );
-      //dispatch
-      //   dispatch(resetExpCreated());
+      // dispatch;
+      dispatch(resetExpUpdate());
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -99,10 +106,10 @@ const expenseSlice = createSlice({
     builder.addCase(createExpAction.pending, (state, action) => {
       state.loading = true;
     });
-    //reset action
-    // builder.addCase(resetExpCreated, (state, acyion) => {
-    //   state.isExpCreated = true;
-    // });
+    // reset action
+    builder.addCase(resetExpCreated, (state, action) => {
+      state.isExpCreated = true;
+    });
     builder.addCase(createExpAction.fulfilled, (state, action) => {
       state.loading = false;
       state.expenseCreated = action?.payload;
@@ -139,6 +146,10 @@ const expenseSlice = createSlice({
     //   update Expense
     builder.addCase(updateExpAction.pending, (state, action) => {
       state.loading = true;
+    });
+    // reset action
+    builder.addCase(resetExpUpdate, (state, action) => {
+      state.isExpUpdated = true;
     });
 
     builder.addCase(updateExpAction.fulfilled, (state, action) => {

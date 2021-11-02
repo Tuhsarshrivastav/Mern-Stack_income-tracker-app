@@ -3,8 +3,10 @@ import moneySVG from "../../img/money.svg";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createExpAction } from "../../redux/slices/expenses/expenseSlices";
+import DisabledButton from "../../components/DisabledButton";
+import ErrorDisplayMessage from "../../components/ErrorDisplayMessage";
 
 //form validations
 const formSchema = Yup.object({
@@ -16,6 +18,9 @@ const formSchema = Yup.object({
 const AddExpense = () => {
   //dispatch
   const dispatch = useDispatch();
+
+  //history
+  const history = useHistory();
 
   //formik form
   const formik = useFormik({
@@ -29,6 +34,16 @@ const AddExpense = () => {
     },
     validationSchema: formSchema,
   });
+  // get expense created from store
+  const state = useSelector((state) => state.expenses);
+  const { loading, appErr, serverErr, isExpCreated } = state;
+
+  //Redirect
+  useEffect(() => {
+    if (isExpCreated) {
+      history.push("expenses");
+    }
+  }, [isExpCreated, dispatch]);
   return (
     <>
       <section className="py-5 bg-danger vh-100">
@@ -48,11 +63,11 @@ const AddExpense = () => {
                   <span className="text-muted">Expense</span>
                   <h2 className="mb-4 fw-light">Record New Expense</h2>
                   {/* Display income Err */}
-                  {/* {expServerErr || expAppErr ? (
-                    <div className="alert alert-danger" role="alert">
-                      {expServerErr} {expAppErr}
-                    </div>
-                  ) : null} */}
+                  {serverErr || appErr ? (
+                    <ErrorDisplayMessage>
+                      {serverErr} {appErr}
+                    </ErrorDisplayMessage>
+                  ) : null}
                   <div className="mb-3 input-group">
                     <input
                       className="form-control"
@@ -92,9 +107,13 @@ const AddExpense = () => {
                   <div className="text-danger mb-2">
                     {formik.touched.amount && formik.errors.amount}
                   </div>
-                  <button type="submit" className="btn btn-danger mb-4 w-100">
-                    Record New Expense
-                  </button>
+                  {loading ? (
+                    <DisabledButton />
+                  ) : (
+                    <button type="submit" className="btn btn-danger mb-4 w-100">
+                      Record New Expense
+                    </button>
+                  )}
                 </form>
               </div>
             </div>

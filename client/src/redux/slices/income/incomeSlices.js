@@ -1,6 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import baseURL from "../../../utils/baseURL";
+
+//Actions for  redirect
+export const resetIncomeCreated = createAction("income/created/resat");
+export const resetIncomeUpdate = createAction("income/update/resat");
 
 //Create action
 export const createIncomeAction = createAsyncThunk(
@@ -17,8 +21,8 @@ export const createIncomeAction = createAsyncThunk(
     try {
       //make http call here
       const { data } = await axios.post(`${baseURL}/income`, payload, config);
-      //dispatch
-      //   dispatch(resetExpCreated());
+      // dispatch
+      dispatch(resetIncomeCreated());
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -47,8 +51,8 @@ export const updateIncomeAction = createAsyncThunk(
         payload,
         config
       );
-      //dispatch
-      //   dispatch(resetExpCreated());
+      // dispatch;
+      dispatch(resetIncomeUpdate());
       return data;
     } catch (error) {
       if (!error?.response) {
@@ -99,16 +103,16 @@ const incomeSlice = createSlice({
     builder.addCase(createIncomeAction.pending, (state, action) => {
       state.loading = true;
     });
-    //reset action
-    // builder.addCase(resetExpCreated, (state, acyion) => {
-    //   state.isExpCreated = true;
-    // });
+    // reset action
+    builder.addCase(resetIncomeCreated, (state, acyion) => {
+      state.isIncCreated = true;
+    });
     builder.addCase(createIncomeAction.fulfilled, (state, action) => {
       state.loading = false;
       state.incomeCreated = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
-      state.isExpCreated = false;
+      state.isIncCreated = false;
     });
     builder.addCase(createIncomeAction.rejected, (state, action) => {
       state.loading = false;
@@ -120,10 +124,7 @@ const incomeSlice = createSlice({
     builder.addCase(fatchAllIncomeAction.pending, (state, action) => {
       state.loading = true;
     });
-    //reset action
-    // builder.addCase(resetExpCreated, (state, acyion) => {
-    //   state.isExpCreated = true;
-    // });
+
     builder.addCase(fatchAllIncomeAction.fulfilled, (state, action) => {
       state.loading = false;
       state.incomeList = action?.payload;
@@ -141,13 +142,17 @@ const incomeSlice = createSlice({
     builder.addCase(updateIncomeAction.pending, (state, action) => {
       state.loading = true;
     });
+    //reset action
+    builder.addCase(resetIncomeUpdate, (state, acyion) => {
+      state.isIncUpdated = true;
+    });
 
     builder.addCase(updateIncomeAction.fulfilled, (state, action) => {
       state.loading = false;
       state.incomeUpdated = action?.payload;
       state.appErr = undefined;
       state.serverErr = undefined;
-      state.isExpCreated = false;
+      state.isIncUpdated = false;
     });
     builder.addCase(updateIncomeAction.rejected, (state, action) => {
       state.loading = false;
