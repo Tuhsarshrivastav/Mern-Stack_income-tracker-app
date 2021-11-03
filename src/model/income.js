@@ -40,4 +40,5 @@ const incomeSchema = mongoose.Schema(
 // pagination
 incomeSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model("Income", incomeSchema);
+const Income = mongoose.model("Income", incomeSchema);
+module.exports = Income;

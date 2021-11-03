@@ -17,3 +17,4 @@ router.post("/login", login);
 router.get("/fetch", fetchAllUser);
 
 module.exports = router;
+ 

@@ -43,4 +43,5 @@ const expensesSchema = mongoose.Schema(
 
 expensesSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model("expenses", expensesSchema);
+const Expenses = mongoose.model("expenses", expensesSchema);
+module.exports = Expenses;

@@ -26,9 +26,27 @@ const userSchema = mongoose.Schema(
     },
   },
   {
+    toObject: {
+      virtuals: true,
+    },
+    toJSON: {
+      virtuals: true,
+    },
     timestamp: true,
   }
 );
+
+// virtual
+userSchema.virtual("expenses", {
+  ref: "Expenses",
+  foreignField: "user",
+  localField: "_id",
+});
+userSchema.virtual("income", {
+  ref: "Income",
+  foreignField: "user",
+  localField: "_id",
+});
 
 //Hash password
 userSchema.pre("save", async function (next) {
