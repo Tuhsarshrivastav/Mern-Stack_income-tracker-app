@@ -1,12 +1,26 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userProfileAction } from "../../redux/slices/users/usersSlices";
+import DataGrap from "../../components/GraphDtata";
+import calcTransaction from "../../utils/accountStatistics";
+import UserProfileStats from "./UserProfileStats";
 
 const Profile = () => {
   const history = useHistory();
   // dispatch
   const dispatch = useDispatch();
+
+  // get data from store
+  const { loading, appErr, serverErr, profile } = useSelector(
+    (state) => state.users
+  );
+
+  // get income statistics
+  const incResult = profile?.income && calcTransaction(profile.income);
+
+  // get enpenses statistics
+  const expResult = profile?.expenses && calcTransaction(profile.expenses);
 
   // call http requiest
   useEffect(() => {
@@ -26,9 +40,11 @@ const Profile = () => {
               />
               <div>
                 <h6 className="fw-bold mb-0">
-                  <span>{/* {profile?.firstname} {profile?.lastname} */}</span>
+                  <span>
+                    {profile?.firstname} {profile?.lastname}
+                  </span>
                   <span className="badge ms-2 bg-primary-light text-primary">
-                    {/* {profile?.expenses?.length + profile?.income?.length}{" "} */}
+                    {profile?.expenses?.length + profile?.income?.length}{" "}
                     Records Created
                   </span>
                 </h6>
@@ -42,15 +58,15 @@ const Profile = () => {
                   <i class="bi bi-pen fs-3 m-3 text-primary"></i>
                 </button>
               </div>
-              {/* <DataGraph
+              <DataGrap
                 income={incResult?.sumTotal}
                 expenses={expResult?.sumTotal}
-              /> */}
+              />
             </div>
 
             <p className="mb-8"> </p>
 
-            {/* <UserProfileStats
+            <UserProfileStats
               numOfTransExp={profile?.expenses?.length}
               avgExp={expResult?.avg}
               totalExp={expResult?.sumTotal}
@@ -61,7 +77,7 @@ const Profile = () => {
               totalInc={incResult?.sumTotal}
               minInc={incResult?.min}
               maxInc={incResult?.max}
-            /> */}
+            />
             <div className="d-flex align-items-center justify-content-center">
               <button
                 // onClick={() => navigate(history, "user-profile-expenses", "")}
