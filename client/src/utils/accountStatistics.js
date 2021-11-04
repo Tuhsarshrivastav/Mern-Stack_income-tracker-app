@@ -12,7 +12,7 @@ const calcTransaction = arr => {
   const avg = sumTotal / 2;
   const min = Math.min(...tranArr);
   const max = Math.max(...tranArr);
-  console.log(avg, min, max, sumTotal);
+  
   return {
     sumTotal,
     avg,

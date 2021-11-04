@@ -55,6 +55,62 @@ export const registerUserAction = createAsyncThunk(
     }
   }
 );
+//profile
+export const userProfileAction = createAsyncThunk(
+  "user/profile",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    //get user token from store
+    const userToken = getState()?.users?.userAuth?.token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+    try {
+      //make http call here
+      const { data } = await axios.get(`${baseURL}/users/profile`, config);
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+// userProfileUpdate
+export const updateProfileAction = createAsyncThunk(
+  "user/update",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    //get user token from store
+    const userToken = getState()?.users?.userAuth?.token;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+    try {
+      //make http call here
+      const { data } = await axios.put(
+        `${baseURL}/users/update`,
+        {
+          firstname: payload?.firstname,
+          lastname: payload?.lastname,
+          email: payload?.email,
+        },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 
 //Logout action
 export const logout = createAsyncThunk(
@@ -99,7 +155,7 @@ const usersSlices = createSlice({
     });
     //handle rejected state
     builder.addCase(loginUserAction.rejected, (state, action) => {
-      console.log(action);
+      
       state.userLoading = false;
       state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.msg;
@@ -122,6 +178,45 @@ const usersSlices = createSlice({
       state.userLoading = false;
       state.userAppErr = action?.payload?.msg;
       state.userServerErr = action?.error?.msg;
+    });
+    //Profile
+    builder.addCase(userProfileAction.pending, (state, action) => {
+      state.loading = true;
+      state.AppErr = undefined;
+      state.ServerErr = undefined;
+    });
+    //handle success state
+    builder.addCase(userProfileAction.fulfilled, (state, action) => {
+      state.profile = action?.payload;
+      state.loading = false;
+      state.AppErr = undefined;
+      state.ServerErr = undefined;
+    });
+    //handle rejected state
+    builder.addCase(userProfileAction.rejected, (state, action) => {
+      state.loading = false;
+      state.AppErr = action?.payload?.msg;
+      state.ServerErr = action?.error?.msg;
+    });
+    //update
+    builder.addCase(updateProfileAction.pending, (state, action) => {
+      state.loading = true;
+      state.AppErr = undefined;
+      state.ServerErr = undefined;
+    });
+    //handle success state
+    builder.addCase(updateProfileAction.fulfilled, (state, action) => {
+      state.userUpdate = action?.payload;
+      state.isEdited = true;
+      state.loading = false;
+      state.AppErr = undefined;
+      state.ServerErr = undefined;
+    });
+    //handle rejected state
+    builder.addCase(updateProfileAction.rejected, (state, action) => {
+      state.loading = false;
+      state.AppErr = action?.payload?.msg;
+      state.ServerErr = action?.error?.msg;
     });
     // Logout
     builder.addCase(logout.fulfilled, (state, action) => {

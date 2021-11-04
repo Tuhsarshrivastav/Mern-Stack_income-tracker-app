@@ -12,7 +12,7 @@ const DashboardData = () => {
   // get data from store
   const state = useSelector((state) => state.account);
   const { loading, appErr, serverErr, accountsDetails } = state;
-  console.log(accountsDetails);
+  
 
   // call api inside useEffect
   useEffect(() => {

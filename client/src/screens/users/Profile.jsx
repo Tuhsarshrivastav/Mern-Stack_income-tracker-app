@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userProfileAction } from "../../redux/slices/users/usersSlices";
+
 const Profile = () => {
   const history = useHistory();
+  // dispatch
+  const dispatch = useDispatch();
+
+  // call http requiest
+  useEffect(() => {
+    dispatch(userProfileAction());
+  }, []);
   return (
     <>
       <section className="py-5">
