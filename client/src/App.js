@@ -14,6 +14,9 @@ import Navbar from "./components/Navigation/Navbar";
 import ExpensesList from "./screens/expense/ExpensesList";
 import EditContent from "./components/EditContent";
 import IncomeList from "./screens/income/IncomeList";
+import UserProfileExpList from "./screens/users/UserProfileExpList";
+import UserProfileIncList from "./screens/users/UserProfileIncList";
+
 function App() {
   return (
     <Router>
@@ -23,6 +26,16 @@ function App() {
         <PrivateProtectRoute exact path="/expenses" component={ExpensesList} />
         <PrivateProtectRoute exact path="/incomes" component={IncomeList} />
         <PrivateProtectRoute exact path="/edit" component={EditContent} />
+        <PrivateProtectRoute
+          exact
+          path="/user-expenses"
+          component={UserProfileExpList}
+        />
+        <PrivateProtectRoute
+          exact
+          path="/user-income"
+          component={UserProfileIncList}
+        />
         <Route exact path="/not-found" component={NotAdmin} />
         <PrivateProtectRoute
           exact
