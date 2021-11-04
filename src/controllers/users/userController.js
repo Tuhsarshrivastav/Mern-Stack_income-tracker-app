@@ -58,7 +58,6 @@ const userProfileController = expressAsyncHandler(async (req, res) => {
       "expenses",
       "income",
     ]);
-
     res.json(profile);
   } catch (error) {
     res.json(error);
