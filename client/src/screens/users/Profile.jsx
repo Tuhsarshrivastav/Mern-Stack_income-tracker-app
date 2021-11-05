@@ -27,7 +27,7 @@ const Profile = () => {
   // call http requiest
   useEffect(() => {
     dispatch(userProfileAction());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       {loading ? (

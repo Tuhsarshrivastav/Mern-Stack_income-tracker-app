@@ -10,8 +10,8 @@ const override = css`
 `;
 
 function LoadingComponent() {
-  let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("#ffffff");
+  let [loading, ] = useState(true);
+  let [color, ] = useState("#ffffff");
 
   return (
     <div

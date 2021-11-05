@@ -42,7 +42,7 @@ const AddIncome = () => {
     if (isIncCreated) {
       history.push("incomes");
     }
-  }, [isIncCreated, dispatch]);
+  }, [isIncCreated, dispatch,history]);
   return (
     <>
       <section className="py-5 bg-success vh-100">

@@ -40,7 +40,7 @@ const UpdateProfile = ({ location: { state } }) => {
   //redirect
   useEffect(() => {
     if (isEdited) history.push("/profile");
-  }, [isEdited, dispatch]);
+  }, [isEdited, dispatch,history]);
   return (
     <>
       {userAppErr || userServerErr ? (

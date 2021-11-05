@@ -40,7 +40,7 @@ const Login = () => {
     if (userAuth) {
       history.push("/profile");
     }
-  }, [userAuth]);
+  }, [userAuth,history]);
 
   return (
     <section

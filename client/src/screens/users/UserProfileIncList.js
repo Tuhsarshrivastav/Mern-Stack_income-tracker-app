@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileAction } from "../../redux/slices/users/usersSlices";
 import LoadingComponent from "../../components/Loading";
 import ErrorDisplayMessage from "../../components/ErrorDisplayMessage";
 import UserProfileContentDetails from "./UserProfileContentDetails";
-import ContentDetails from "../../components/ContentDetails";
 
 const UserProfileIncList = () => {
   const dispatch = useDispatch();

@@ -41,7 +41,7 @@ const EditContent = ({
   });
 
   const expensedata = useSelector((state) => state.expenses);
-  const { appErr, serverErr, loading, expenseUpdated } = expensedata;
+  const { appErr, serverErr, loading } = expensedata;
   return (
     <section className="py-5 bg-secondary vh-100">
       <div className="container text-center">

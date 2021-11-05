@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import moneySVG from "../../img/money.svg";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
@@ -43,7 +43,7 @@ const AddExpense = () => {
     if (isExpCreated) {
       history.push("expenses");
     }
-  }, [isExpCreated, dispatch]);
+  }, [isExpCreated, dispatch,history]);
   return (
     <>
       <section className="py-5 bg-danger vh-100">

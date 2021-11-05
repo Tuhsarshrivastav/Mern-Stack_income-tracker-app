@@ -9,14 +9,15 @@ const DashboardData = () => {
   //dispatch
   const dispatch = useDispatch();
 
-  // get data from store
-  const state = useSelector((state) => state.account);
-  const { loading, appErr, serverErr, accountsDetails } = state;
-
   // call api inside useEffect
   useEffect(() => {
     dispatch(fatchAccountStatsAction());
   }, [dispatch]);
+  
+  // get data from store
+  const state = useSelector((state) => state.account);
+  const { loading, appErr, serverErr, accountsDetails } = state;
+
   //format date
   return (
     <>
@@ -40,11 +41,10 @@ const DashboardData = () => {
                 }}
               >
                 {/* Grpah */}
-                {/* <DataGrap income={totalInc} expenses={totalExp} /> */}
+
               </div>
               {/* Net Profit */}
               <div style={{ textAlign: "center", margin: "20px" }}>
-                {/* <h2 className="text-success">Net Profit : {formattedNetProfit}</h2> */}
               </div>
               <div class="row">
                 <div class="col-12 col-md-6 mb-6">
@@ -70,7 +70,7 @@ const DashboardData = () => {
                       <span>Number of Transactions</span>
                       <span class="text-danger ms-1">
                         <span>
-                          {accountsDetails?.expenseStas[0].totalRecordsExp}
+                          {accountsDetails?.expenseStas[0]?.totalRecordsExp}
                         </span>
                       </span>
                     </p>
@@ -78,14 +78,14 @@ const DashboardData = () => {
                     <p class="mb-0">
                       <span>Minimum Transactions</span>
                       <span class="text-danger ms-1">
-                        <span>{accountsDetails?.expenseStas[0].minExp}</span>
+                        <span>{accountsDetails?.expenseStas[0]?.minExp}</span>
                       </span>
                     </p>
 
                     <p class="mb-0">
                       <span>Maximum Transactions</span>
                       <span class="text-danger ms-1">
-                        <span>{accountsDetails?.expenseStas[0].maxExp}</span>
+                        <span>{accountsDetails?.expenseStas[0]?.maxExp}</span>
                       </span>
                     </p>
 
@@ -93,7 +93,7 @@ const DashboardData = () => {
                       <span>Average Transactions</span>
                       <span class="text-danger ms-1">
                         <span>
-                          {accountsDetails?.expenseStas[0].averageExp}
+                          {accountsDetails?.expenseStas[0]?.averageExp}
                         </span>
                       </span>
                     </p>
@@ -115,7 +115,7 @@ const DashboardData = () => {
                     <h1 class="mb-4">
                       {currencyFormatter(
                         "USD",
-                        accountsDetails?.incomeStas[0].totalIncome
+                        accountsDetails?.incomeStas[0]?.totalIncome
                       )}
                     </h1>
 
@@ -123,7 +123,7 @@ const DashboardData = () => {
                       <span>Number of Transactions</span>
                       <span class="text-danger ms-1">
                         <span>
-                          {accountsDetails?.incomeStas[0].totalRecordsIncome}
+                          {accountsDetails?.incomeStas[0]?.totalRecordsIncome}
                         </span>
                       </span>
                     </p>
@@ -131,14 +131,14 @@ const DashboardData = () => {
                     <p class="mb-0">
                       <span>Minimum Transactions</span>
                       <span class="text-danger ms-1">
-                        {accountsDetails?.incomeStas[0].minIncome}
+                        {accountsDetails?.incomeStas[0]?.minIncome}
                       </span>
                     </p>
 
                     <p class="mb-0">
                       <span>Maximum Transactions</span>
                       <span class="text-danger ms-1">
-                        <span>{accountsDetails?.incomeStas[0].maxIncome}</span>
+                        <span>{accountsDetails?.incomeStas[0]?.maxIncome}</span>
                       </span>
                     </p>
 
@@ -146,7 +146,7 @@ const DashboardData = () => {
                       <span>Average Transactions</span>
                       <span class="text-danger ms-1">
                         <span>
-                          {accountsDetails?.incomeStas[0].averageIncome}
+                          {accountsDetails?.incomeStas[0]?.averageIncome}
                         </span>
                       </span>
                     </p>

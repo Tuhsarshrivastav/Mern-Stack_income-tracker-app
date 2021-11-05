@@ -42,8 +42,8 @@ function App() {
           path="/user-income"
           component={UserProfileIncList}
         />
-        <Route exact path="/not-found" component={NotAdmin} />
-        <PrivateProtectRoute
+        <Route exact path="/not-admin" component={NotAdmin} />
+        <AdminRoute
           exact
           path="/dashboard"
           component={DashboardData}
