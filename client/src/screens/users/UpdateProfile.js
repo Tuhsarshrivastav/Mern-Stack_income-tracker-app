@@ -18,7 +18,7 @@ const UpdateProfile = ({ location: { state } }) => {
   //history
   const history = useHistory();
   //get data from store
-  const user = useSelector(state => state?.users);
+  const user = useSelector((state) => state?.users);
   const { userAppErr, userServerErr, userLoading, isEdited } = user;
 
   //dispatch
@@ -32,7 +32,7 @@ const UpdateProfile = ({ location: { state } }) => {
       lastname: state?.user?.lastname,
     },
 
-    onSubmit: values => {
+    onSubmit: (values) => {
       dispatch(updateProfileAction(values));
     },
     validationSchema: formSchema,
@@ -55,20 +55,6 @@ const UpdateProfile = ({ location: { state } }) => {
                 <div className="p-4 shadow-sm rounded bg-white">
                   <form onSubmit={formik.handleSubmit}>
                     <span className="text-muted">Update Profile</span>
-                    {/* <h4 className="mb-4 fw-light">
-                    Hi, {data?.data?.firstname} Do you want to update your
-                    profile
-                  </h4> */}
-
-                    {/* Display income Err */}
-                    {/* {userAppErr || userServerErr ? (
-                    <ErrorDisplayMessage
-                      error={{
-                        userAppErr,
-                        userServerErr,
-                      }}
-                    />
-                  ) : null} */}
                     <div className="mb-3 input-group">
                       <input
                         value={formik.values.firstname}

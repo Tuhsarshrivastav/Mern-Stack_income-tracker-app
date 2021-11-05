@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/slices/users/usersSlices";
 const PrivateNavbar = () => {
+  //dispatch funtion to logout user
+  const dispatch = useDispatch();
   return (
     <>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -52,7 +55,12 @@ const PrivateNavbar = () => {
               <Link to="/add-income" className="btn btn-success me-2">
                 New Income
               </Link>
-              <button className="btn btn-warning me-2">Logout</button>
+              <button
+                onClick={() => dispatch(logout())}
+                className="btn btn-warning me-2"
+              >
+                Logout
+              </button>
             </form>
           </div>
         </div>

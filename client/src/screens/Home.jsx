@@ -30,18 +30,8 @@ const Home = () => {
                     >
                       Track your performance
                     </Link>
-                    <a
-                      target="_blank"
-                      className="btn btn-secondary mb-2 mb-sm-0"
-                      href="https://www.youtube.com/channel/UCvu6J9q1AM6q4xysGqAvVyw"
-                    >
-                      Video Tutorial
-                    </a>
                   </div>
                 </div>
-                <h1 className="text-danger">Admin Login </h1>
-                <p>User name: admin@gmail.com</p>
-                <p>password: 12345</p>
                 <div className="row align-items-center pt-5">
                   <div className="col-6 col-md-4 col-lg-3 col-xl-2 text-center mb-5">
                     <img

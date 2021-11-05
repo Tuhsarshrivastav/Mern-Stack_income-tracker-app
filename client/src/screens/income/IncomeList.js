@@ -38,12 +38,12 @@ const IncomeList = () => {
                 href="#"
               ></a>
               <div className="pt-8 px-8 mb-8">
-                <h6 className="mb-0 fs-3">Recent Expense transactions</h6>
+                <h6 className="mb-0 fs-3">Recent Income transactions</h6>
                 <p className="mb-0">
-                  Below is the history of your expense transactions records
+                  Below is the history of your income transactions records
                 </p>
                 <Link to="/add-income" className="btn  btn-outline-success me-2 m-2">
-                  New Expense
+                  New Income
                 </Link>
               </div>
               <table className="table">

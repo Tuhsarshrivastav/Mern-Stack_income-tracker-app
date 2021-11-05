@@ -40,7 +40,7 @@ const Register = () => {
   // Redirect
   useEffect(() => {
     if (isRegistered) {
-      history.push("/login");
+      history.push("/profile");
     }
   }, [isRegistered]);
 

@@ -20,14 +20,14 @@ const expensesSchema = mongoose.Schema(
       type: Number,
       required: [true, "Amount is required"],
     },
+    createdAt: {
+      type: Date,
+      default: new Date(),
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: [true, "User Id is required"],
-    },
-    createdAt: {
-      type: Date,
-      default: new Date(),
     },
   },
   {
