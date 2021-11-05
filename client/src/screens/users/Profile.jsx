@@ -14,7 +14,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   // get data from store
-  const { loading, appErr, serverErr, profile } = useSelector(
+  const { loading, userAuth, appErr, serverErr, profile } = useSelector(
     (state) => state.users
   );
 
@@ -61,7 +61,14 @@ const Profile = () => {
                   {/* <p className="mb-0">{profile?.email}</p> */}
                   <p className="mb-0">Date Joined: 12-Jan-1999</p>
                   <button
-                    // onClick={() => navigate(history, "update-profile", profile)}
+                    onClick={() =>
+                      history.push({
+                        pathname: "update-profile",
+                        state: {
+                          user: userAuth,
+                        },
+                      })
+                    }
                     className="btn"
                   >
                     Edit Profile

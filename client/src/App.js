@@ -16,6 +16,7 @@ import EditContent from "./components/EditContent";
 import IncomeList from "./screens/income/IncomeList";
 import UserProfileExpList from "./screens/users/UserProfileExpList";
 import UserProfileIncList from "./screens/users/UserProfileIncList";
+import UpdateProfile from "./screens/users/UpdateProfile";
 
 function App() {
   return (
@@ -26,6 +27,11 @@ function App() {
         <PrivateProtectRoute exact path="/expenses" component={ExpensesList} />
         <PrivateProtectRoute exact path="/incomes" component={IncomeList} />
         <PrivateProtectRoute exact path="/edit" component={EditContent} />
+        <PrivateProtectRoute
+          exact
+          path="/update-profile"
+          component={UpdateProfile}
+        />
         <PrivateProtectRoute
           exact
           path="/user-expenses"
