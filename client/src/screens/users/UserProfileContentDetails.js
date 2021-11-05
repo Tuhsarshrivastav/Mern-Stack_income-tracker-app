@@ -1,15 +1,27 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import dateFormatter from "../../utils/dateFormatter";
 
 const UserProfileContentDetails = ({ item }) => {
+  const history = useHistory();
   return (
     <tr className="align-middle text-dark">
-      {/* <td className="p-6">{item?.title}</td>
+      <td className="p-6">{item?.title}</td>
       <td className="p-6">{item?.description}</td>
       <td className="p-6">{item?.amount}</td>
-      <td className="p-6">{useDateFormatter(item?.createdAt)}</td> */}
+      <td className="p-6">
+        {item?.createdAt && dateFormatter(item?.createdAt)}
+      </td>
       <td className="p-6">
         <button
-          // onClick={() => navigate(history, "edit", item)}
+          onClick={() =>
+            history.push({
+              pathname: `/edit`,
+              state: {
+                item,
+              },
+            })
+          }
           className="badge bg-success-light text-success"
         >
           <svg
